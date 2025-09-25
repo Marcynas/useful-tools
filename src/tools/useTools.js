@@ -6,6 +6,7 @@ export function useTools() {
   const filteredTools = ref([])
   const searchQuery = ref('')
   const selectedTag = ref('all')
+  const loading = ref(false)
   
   const tags = [
     "all", "free", "paid", "freemium", "software", "app", "website", 
@@ -16,24 +17,41 @@ export function useTools() {
 
   const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQyAYAuMz-YAen_9ZcuR61DIOKLseC_FTK6AQx-_NCXism02McCLOLW45q1pyMPtKlEKpuJAm0ET6Ch/pub?gid=0&single=true&output=csv"
 
-  const fetchSheet = async () => {
-    try {
-      const res = await fetch(sheetUrl)
-      const csvText = await res.text()
-      tableData.value = Papa.parse(csvText, { header: true }).data
-        .filter(r => r.Tool)
-        .map(r => ({
-          Category: r.Category?.trim() || 'Uncategorized',
-          Tool: r.Tool?.trim(),
-          Description: r.Description?.trim(),
-          Link: r.Link?.trim(),
-          Icon: r.Icon?.trim(),
-          Tags: r.Tags?.trim()
-        }))
-    } catch (e) {
-      console.error(e)
+  const CACHE_KEY = 'tools_csv_cache'
+const CACHE_TIME = 60 * 60 * 1000 // 1 hour
+
+const fetchSheet = async () => {
+  loading.value = true
+  const cached = localStorage.getItem(CACHE_KEY)
+  if (cached) {
+    const { data, timestamp } = JSON.parse(cached)
+    if (Date.now() - timestamp < CACHE_TIME) {
+      tableData.value = data
+      loading.value = false
+      return
     }
   }
+  try {
+    const res = await fetch(sheetUrl)
+    const csvText = await res.text()
+    const parsed = Papa.parse(csvText, { header: true }).data
+      .filter(r => r.Tool)
+      .map(r => ({
+        Category: r.Category?.trim() || 'Uncategorized',
+        Tool: r.Tool?.trim(),
+        Description: r.Description?.trim(),
+        Link: r.Link?.trim(),
+        Icon: r.Icon?.trim(),
+        Tags: r.Tags?.trim()
+      }))
+    tableData.value = parsed
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ data: parsed, timestamp: Date.now() }))
+  } catch (e) {
+    console.error(e)
+  } finally {
+    loading.value = false
+  }
+}
 
   onMounted(fetchSheet)
 
@@ -58,5 +76,5 @@ export function useTools() {
     }, {})
   })
 
-  return { filteredTools, groupedTools, searchQuery, selectedTag, tags }
+  return { filteredTools, groupedTools, searchQuery, selectedTag, tags, loading }
 }

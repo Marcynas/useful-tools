@@ -17,16 +17,21 @@
     </header>
 
     <main>
-      <div v-for="(tools, category) in groupedTools" :key="category" class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4">{{ category }}</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
-          <ToolCard
-            v-for="tool in tools"
-            :key="tool.Tool"
-            :tool="tool"
-            :activeTag="selectedTag"
-            @tag-selected="selectedTag = $event"
-          />
+      <div v-if="loading" class="flex justify-center items-center py-12">
+        <span class="text-lg text-gray-500">Loading tools...</span>
+      </div>
+      <div v-else>
+        <div v-for="(tools, category) in groupedTools" :key="category" class="mb-8">
+          <h2 class="text-2xl font-semibold mb-4">{{ category }}</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
+            <ToolCard
+              v-for="tool in tools"
+              :key="tool.Tool"
+              :tool="tool"
+              :activeTag="selectedTag"
+              @tag-selected="selectedTag = $event"
+            />
+          </div>
         </div>
       </div>
     </main>
@@ -37,5 +42,5 @@
 import ToolCard from './components/ToolCard.vue'
 import { useTools } from './tools/useTools.js'
 
-const { filteredTools, groupedTools, searchQuery, selectedTag, tags } = useTools()
+const { filteredTools, groupedTools, searchQuery, selectedTag, tags, loading } = useTools()
 </script>
