@@ -49,6 +49,6 @@ const props = defineProps({
 
 const isExpanded = ref(false)
 const truncatedDescription = computed(() => props.tool.Description?.slice(0, 200) || '')
-const iconSrc = computed(() => props.tool.Icon ? `/src/assets/icons/${props.tool.Icon}` : '/src/assets/icons/defaultIcon.svg')
+const iconSrc = computed(() => props.tool.Icon ? `/icons/${props.tool.Icon}` : '/icons/defaultIcon.svg')
 const tagsArray = computed(() => props.tool.Tags?.split(',').map(t => t.trim()) || [])
 </script>
