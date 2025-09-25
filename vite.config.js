@@ -5,13 +5,13 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   base: "/usefull-tools/",
-  plugins: [],
+    plugins: [vue(),
+    tailwindcss()
+  ],
   resolve: {
     alias: [
       
     ]
   },
-  plugins: [vue(),
-    tailwindcss()
-  ],
+
 })
