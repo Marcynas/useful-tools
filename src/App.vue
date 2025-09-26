@@ -8,9 +8,13 @@
           v-model="searchQuery"
           type="text"
           placeholder="Search tools..."
-          class="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2"
         />
-        <select v-model="selectedTag" class="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <select v-model="selectedCategory" class="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2">
+          <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+        </select>
+        <select v-model="selectedTag" class="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2">
+          <option value="all">All tags</option>
           <option v-for="tag in tags" :key="tag" :value="tag">{{ tag }}</option>
         </select>
       </div>
@@ -42,5 +46,5 @@
 import ToolCard from './components/ToolCard.vue'
 import { useTools } from './tools/useTools.js'
 
-const { filteredTools, groupedTools, searchQuery, selectedTag, tags, loading } = useTools()
+const { filteredTools, groupedTools, searchQuery, selectedCategory, categories, tags, loading, selectedTag } = useTools()
 </script>
