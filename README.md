@@ -28,4 +28,4 @@ A curated list of tools to make your life easier.
 - <a href="https://vuejs.org/"> ![Vue](https://img.shields.io/badge/Vue.js-4FC08D.svg?style=for-the-badge&logo=vuedotjs&logoColor=white) </a>
 - <a href="https://tailwindcss.com/"> ![Tailwind](https://img.shields.io/badge/Tailwind%20CSS-06B6D4.svg?style=for-the-badge&logo=Tailwind-CSS&logoColor=white) </a>
 
-- <a href="https://www.npmjs.com/package/vueuse"> ![GoogleSheets](https://img.shields.io/badge/Google%20Sheets-34A853.svg?style=for-the-badge&logo=Google-Sheets&logoColor=white) </a>
+- <a href="https://workspace.google.com/products/sheets/"> ![GoogleSheets](https://img.shields.io/badge/Google%20Sheets-34A853.svg?style=for-the-badge&logo=Google-Sheets&logoColor=white) </a>
